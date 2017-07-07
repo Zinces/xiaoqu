@@ -1,0 +1,144 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>
+			{$info['id']?'修改':'添加'}租售
+
+		</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<input type="hidden" name="name" value="{:session('user_auth.username')}">
+		<div class="form-item">
+			<label class="item-label">标题<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title" value="{$info.title|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">价格<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="price" value="{$info.price|default=''}">单位：
+					<select name="company" value="{$info.company|default=''}">
+						<option value="1" <if condition="$info.company eq 1"> selected</if>>元/月</option>
+						<option value="2" <if condition="$info.company eq 2"> selected</if>>万元</option>
+					</select>
+			</div>
+
+		</div>
+        <div class="form-item">
+            <label class="item-label">类型<span class="check-tips"></span></label>
+            <div class="controls">
+                <select name="type">
+                     <option value="1" <if condition="$info.type eq 1"> selected</if>>出租</option>
+					 <option value="2" <if condition="$info.type eq 2"> selected</if>>出售</option>
+                </select>
+            </div>
+        </div>
+
+		<div class="form-item">
+			<label class="item-label">分类图标</label>
+			<input type="file" id="upload_picture">
+			<input type="hidden" name="icon" id="icon" value="{$info['icon']|default=''}"/>
+			<div class="upload-img-box">
+				<notempty name="info['icon']">
+					<div class="upload-pre-item"><img src="__ROOT__{$info.icon|get_cover='path'}"/></div>
+				</notempty>
+			</div>
+
+		<script type="text/javascript">
+            //上传图片
+			/* 初始化上传插件 */
+            $("#upload_picture").uploadify({
+                "height"          : 30,
+                "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                "fileObjName"     : "download",
+                "buttonText"      : "上传图片",
+                "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                "width"           : 120,
+                'removeTimeout'	  : 1,
+                'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+                "onUploadSuccess" : uploadPicture,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+            });
+            function uploadPicture(file, data){
+                var data = $.parseJSON(data);
+                var src = '';
+                if(data.status){
+                    $("#icon").val(data.id);
+                    src = data.url || '__ROOT__' + data.path;
+                    $("#icon").parent().find('.upload-img-box').html(
+                        '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+                    );
+                } else {
+                    updateAlert(data.info);
+                    setTimeout(function(){
+                        $('#top-alert').find('button').click();
+                        $(that).removeClass('disabled').prop('disabled',false);
+                    },1500);
+                }
+            }
+		</script>
+		</div>
+
+		<div class="form-item">
+			<label class="item-label">内容<span class="check-tips"></span></label>
+
+				<label class="textarea">
+					<textarea name="{$field.name}">{$data[$field['name']]}</textarea>
+					{:hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$data[$field['name']]))}
+				</label>
+			</div>
+
+		<div class="form-item">
+			<label class="item-label">简单描述<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title2" value="{$info.title2|default=''}">
+			</div>
+		</div>
+
+		<div class="form-item">
+			<label>截止时间：</label>
+			<input type="text" id="time-start" name="end_time" class="text input-2x" value="{$info.end_time|default=''}"/>
+		</div>
+
+		<div class="form-item">
+			<label class="item-label">联系人号码<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tel" value="{$info.tel|default=''}">
+			</div>
+		</div>
+
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+        $(function() {
+            $('#time-start').datetimepicker({
+                format: 'yyyy-mm-dd',
+                language:"zh-CN",
+                minView:2,
+                autoclose:true
+            });
+		//导航高亮
+            highlight_subnav('{:U('
+            index
+            ')}'
+            )
+            ;
+        });
+</script>
+</block>
