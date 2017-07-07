@@ -7,7 +7,7 @@
 // | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://www.zjzit.cn>
 // +----------------------------------------------------------------------
 
-namespace Home\Model;
+namespace Wechat\Model;
 use Think\Model;
 use User\Api\UserApi;
 

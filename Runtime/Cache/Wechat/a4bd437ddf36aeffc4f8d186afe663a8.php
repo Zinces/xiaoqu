@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -28,7 +28,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid text-center">
             <div class="col-xs-3">
-                <p class="navbar-text"><a href="{:U('index')}" class="navbar-link">首页</a></p>
+                <p class="navbar-text"><a href="<?php echo U('index');?>" class="navbar-link">首页</a></p>
             </div>
             <div class="col-xs-3">
                 <p class="navbar-text"><a href="fuwu.html" class="navbar-link">服务</a></p>
@@ -37,7 +37,7 @@
                 <p class="navbar-text"><a href="faxian.html" class="navbar-link">发现</a></p>
             </div>
             <div class="col-xs-3">
-                <p class="navbar-text"><a href="{:U('User/login')}" class="navbar-link">我的</a></p>
+                <p class="navbar-text"><a href="<?php echo U('User/login');?>" class="navbar-link">我的</a></p>
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-4">
-                        <a href="{:U('notice')}">
+                        <a href="<?php echo U('notice');?>">
                             <div class="indexLabel label-danger">
                                 <span class="glyphicon glyphicon-bullhorn"></span><br/>
                                 小区通知
@@ -83,7 +83,7 @@
                         </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="{:U('zushou')}">
+                        <a href="<?php echo U('zushou');?>">
                             <div class="indexLabel label-primary">
                                 <span class="glyphicon glyphicon-usd"></span><br/>
                                 小区租售

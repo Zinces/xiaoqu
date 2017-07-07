@@ -11,12 +11,21 @@ namespace Admin\Controller;
 
 
 
+use Think\Page;
+
 class EstateManagementController extends AdminController
 {
     public function index(){
+        $User=M('EstateManagement');
 
-        $list=M('EstateManagement')->select();
+        $count=$User->count();
+        $Page=new Page($count,1);
+        $Page->setConfig('header','条信息');
+        $show=$Page->show();
+        //$list=$User->select();
+        $list=$User->limit($Page->firstRow.','.$Page->listRows)->select();
         $this->assign('list',$list);
+        $this->assign('page',$show);// 赋值分页输出
         $this->meta_title='小区租售';
         $this->display();
     }

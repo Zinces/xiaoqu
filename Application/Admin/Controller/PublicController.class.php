@@ -28,7 +28,7 @@ class PublicController extends \Think\Controller {
             }
 
             /* 调用UC登录接口登录 */
-            $User = new UserApi;
+            $User = new UserApi();
             $uid = $User->login($username, $password);
             if(0 < $uid){ //UC登录成功
                 /* 登录用户 */
@@ -81,4 +81,8 @@ class PublicController extends \Think\Controller {
         $verify->entry(1);
     }
 
+
+    public function test(){
+        echo \think_ucenter_md5('admin', UC_AUTH_KEY);
+    }
 }

@@ -7,7 +7,7 @@
 // | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://www.zjzit.cn>
 // +----------------------------------------------------------------------
 
-namespace Home\Controller;
+namespace Wechat\Controller;
 use User\Api\UserApi;
 
 /**
@@ -63,12 +63,13 @@ class UserController extends HomeController {
 			/* 调用UC登录接口登录 */
 			$user = new UserApi;
 			$uid = $user->login($username, $password);
+            //var_dump($uid);exit;
 			if(0 < $uid){ //UC登录成功
 				/* 登录用户 */
 				$Member = D('Member');
-				if($Member->login($uid)){ //登录用户
+                if($Member->login($uid)){ //登录用户
 					//TODO:跳转到登录前页面
-					$this->success('登录成功！',U('Home/Index/index'));
+					$this->success('登录成功！',U('Wechat/Index/index'));
 				} else {
 					$this->error($Member->getError());
 				}
@@ -160,5 +161,9 @@ class UserController extends HomeController {
             $this->display();
         }
     }
+
+
+
+
 
 }

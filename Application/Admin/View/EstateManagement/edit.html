@@ -88,8 +88,8 @@
 			<label class="item-label">内容<span class="check-tips"></span></label>
 
 				<label class="textarea">
-					<textarea name="{$field.name}">{$data[$field['name']]}</textarea>
-					{:hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$data[$field['name']]))}
+					<textarea name="content">{$info.content|default=''}</textarea>
+					{:hook('adminArticleEdit', array('name'=>content,'value'=>$data[content]))}
 				</label>
 			</div>
 
