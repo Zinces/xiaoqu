@@ -18,7 +18,11 @@ class UserController extends HomeController {
 
 	/* 用户中心首页 */
 	public function index(){
-		
+        if ( !is_login() ) {
+            $this->error( '您还没有登陆',U('User/login') );
+        }else{
+            $this->display('index');
+        }
 	}
 
 	/* 注册页面 */
@@ -84,6 +88,7 @@ class UserController extends HomeController {
 			}
 
 		} else { //显示登录表单
+            $this->buildHtml("index",'',"");
 			$this->display();
 		}
 	}
